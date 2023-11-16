@@ -2,13 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef struct {
-    char* data;
-    int size;
-    int top;
-} Stack;
-
+#include "parser.h"
 void initializeStack(Stack* stack, int size) {
     stack->data = (char*)malloc(size * sizeof(char));
     stack->size = size;
@@ -39,6 +33,7 @@ char (*parseJSON(const char* json))[100][256] {
     char parent[100][256];
     char (*arr)[100][256] = malloc(sizeof(char[100][256]));
     int keyIndex = 0;
+    int eofFlag = 0;
     int itemno = 0;
     char item[2][256];
     for (int i = 0; json[i] != '\0'; i++) {
@@ -54,15 +49,18 @@ char (*parseJSON(const char* json))[100][256] {
                     printf("Error: Mismatched braces\n");
                     return NULL;
                 }
+                if(!eofFlag){
                 printf("%s %s\n",item[0],item[1]);
                 strcpy((*arr)[itemno++],item[0]);
                 strcpy((*arr)[itemno++],item[1]);
+                }
                 break;
             case ']':
                 if (pop(&stack) != '[') {
                     printf("Error: Mismatched brackets\n");
                     return NULL;
                 }
+                eofFlag = 1;
                 break;
             case '"':
 
@@ -102,14 +100,8 @@ char (*parseJSON(const char* json))[100][256] {
         }
     }
 
-    return arr;
-    if (stack.top == -1) {
-        printf("JSON is valid\n");
-    } else {
-        printf("Error: Unmatched braces or brackets\n");
-    }
-
     free(stack.data);
+    return arr;
 }
 
 int main() {
@@ -133,10 +125,8 @@ int main() {
     json[fileSize] = '\0';
 
     fclose(file);
-    printf("%s",json);
-
-    parseJSON(json);
-
+    char (*test)[100][256];
+    test = parseJSON(json);
 
     free(json);
 
