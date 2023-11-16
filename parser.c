@@ -30,14 +30,17 @@ char pop(Stack* stack) {
     return stack->data[stack->top--];
 }
 
-void parseJSON(const char* json) {
+char (*parseJSON(const char* json))[100][256] {
     Stack stack;
     initializeStack(&stack, 10);
-    char* prev;
+    char prev[256];
     int inString = 0;
     char key[256];
+    char parent[100][256];
+    char (*arr)[100][256] = malloc(sizeof(char[100][256]));
     int keyIndex = 0;
-
+    int itemno = 0;
+    char item[2][256];
     for (int i = 0; json[i] != '\0'; i++) {
         char currentChar = json[i];
 
@@ -49,13 +52,16 @@ void parseJSON(const char* json) {
             case '}':
                 if (pop(&stack) != '{') {
                     printf("Error: Mismatched braces\n");
-                    return;
+                    return NULL;
                 }
+                printf("%s %s\n",item[0],item[1]);
+                strcpy((*arr)[itemno++],item[0]);
+                strcpy((*arr)[itemno++],item[1]);
                 break;
             case ']':
                 if (pop(&stack) != '[') {
                     printf("Error: Mismatched brackets\n");
-                    return;
+                    return NULL;
                 }
                 break;
             case '"':
@@ -66,16 +72,24 @@ void parseJSON(const char* json) {
 
                 if (!inString) {
                     key[keyIndex] = '\0';
-                    prev = key;
+                    strcpy(prev,key);
                     keyIndex = 0;
+                    for (int i = 0; i<256; i++) {
+                        key[i] = '\0';
+                    }
                 }
                 break;
             case ',':
 
                 if (!inString && keyIndex > 0) {
-                    if(strcmp(prev, "price")){
-                    printf("Value: %s\n", key);
+                    if(!strcmp(prev,"price")){
+                        strcpy(item[1],key);
+                    }else if(!strcmp(prev,"model")){
+                        strcpy(item[0],key);
+                    }
                     keyIndex = 0;
+                    for (int i = 0; i<256; i++) {
+                        key[i] = '\0';
                     }
                 }
                 break;
@@ -88,7 +102,7 @@ void parseJSON(const char* json) {
         }
     }
 
-
+    return arr;
     if (stack.top == -1) {
         printf("JSON is valid\n");
     } else {
@@ -118,9 +132,8 @@ int main() {
     fread(json, sizeof(char), fileSize, file);
     json[fileSize] = '\0';
 
-
     fclose(file);
-
+    printf("%s",json);
 
     parseJSON(json);
 
