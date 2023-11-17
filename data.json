@@ -4,32 +4,32 @@
     {
       "brand": "Apple",
       "model": "iPhone_13",
-      "price": "999.99"
+      "price": "999.99",
     },
     {
       "brand": "Samsung",
       "model": "Galaxy S21",
-      "price": "799.99"
+      "price": "799.99",
     },
     {
       "brand": "Dell",
       "model": "XPS 13",
-      "price": "1299.99"
+      "price": "1299.99",
     },
     {
       "brand": "HP",
       "model": "Envy x360",
-      "price": "899.99"
+      "price": "899.99",
     },
     {
       "brand": "Google",
       "model": "Pixel 6",
-      "price": "699.99"
+      "price": "699.99",
     },
     {
       "brand": "Lenovo",
       "model": "ThinkPad X1 Carbon",
-      "price": "1499.99"
+      "price": "1499.99",
     }
   ]
 }

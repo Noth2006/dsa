@@ -104,9 +104,21 @@ int main(){
     fclose(file);
     char (*test)[100][256];
     test = parseJSON(json);
-
+    //char (*arr)[100][256] = malloc(sizeof(char[100][256]));
     free(json);
-
+    NODE* new;
+    int i = 0;
+//    printf("%d , %s\n",strcmp((*test)[12],"NULL"),(*test)[12]);
+   // for(int j = 9;j<17;j++)
+   // {
+   //     printf("%d : %s\n",j,(*test)[j]);
+   // }
+    while(strcmp((*test)[i], "NULL"))
+    {
+        new = create((*test)[i],atoi((*test)[i+1]));
+        update(one,new);
+        i+=2;
+    }
     find_closest(one,three);
     update_graph(arr,one,three);
 

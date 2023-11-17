@@ -33,8 +33,8 @@ char (*parseJSON(const char* json))[100][256] {
     char parent[100][256];
     char (*arr)[100][256] = malloc(sizeof(char[100][256]));
     int keyIndex = 0;
-    int eofFlag = 0;
     int itemno = 0;
+    int eofFlag = 0;
     char item[2][256];
     for (int i = 0; json[i] != '\0'; i++) {
         char currentChar = json[i];
@@ -46,20 +46,21 @@ char (*parseJSON(const char* json))[100][256] {
                 break;
             case '}':
                 if (pop(&stack) != '{') {
-                    printf("Error: Mismatched braces\n");
+                    printf("missing brace\n");
                     return NULL;
                 }
                 if(!eofFlag){
-                printf("%s %s\n",item[0],item[1]);
                 strcpy((*arr)[itemno++],item[0]);
                 strcpy((*arr)[itemno++],item[1]);
                 }
                 break;
             case ']':
                 if (pop(&stack) != '[') {
-                    printf("Error: Mismatched brackets\n");
+                    printf("missing bracket\n");
                     return NULL;
                 }
+                printf("itemno: %d\n",itemno);
+                strcpy((*arr)[itemno],"NULL");
                 eofFlag = 1;
                 break;
             case '"':
@@ -104,31 +105,3 @@ char (*parseJSON(const char* json))[100][256] {
     return arr;
 }
 
-int main() {
-
-    FILE* file = fopen("data.json", "r");
-    if (file == NULL) {
-        perror("Error opening file");
-        return 1;
-    }
-
-
-    fseek(file, 0, SEEK_END);
-    long fileSize = ftell(file);
-    fseek(file, 0, SEEK_SET);
-
-
-    char* json = (char*)malloc((fileSize + 1) * sizeof(char));
-
-
-    fread(json, sizeof(char), fileSize, file);
-    json[fileSize] = '\0';
-
-    fclose(file);
-    char (*test)[100][256];
-    test = parseJSON(json);
-
-    free(json);
-
-    return 0;
-}
