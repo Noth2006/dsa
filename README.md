@@ -2,8 +2,10 @@
 
 ### Simple E-Commerce product tracking and search.
 #### Steps to run : 
-    - Run the Makefile included in `src/`
-    - Execute the generated binary
+    - git clone git@github.com:Noth2006/dsa.git 
+    - cd dsa/src
+    - make
+    - ./soothsayer
 > PPT included in this repo
 
 ![Screenshot](./assets/ss.png)
