@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include "autoc.h"
 #include<stdlib.h>
 #include<string.h>
 #include "parser.h"
@@ -83,7 +84,7 @@ int main(){
     update(one,three);
     NODE*four=create("acer",76000);
     update(one,four);
-    FILE* file = fopen("data.json", "r");
+    FILE* file = fopen("../data.json", "r");
     if (file == NULL) {
         perror("Error opening file");
         return 1;
@@ -113,12 +114,20 @@ int main(){
    // {
    //     printf("%d : %s\n",j,(*test)[j]);
    // }
+   NODEE *root=getnode();
+
+char prefix[100];
+
     while(strcmp((*test)[i], "NULL"))
     {
         new = create((*test)[i],atoi((*test)[i+1]));
         update(one,new);
+        insert((*test)[i],root);
         i+=2;
     }
+    printf("Enter the product name to search: \n");
+    scanf("%s",&prefix);
+    display_prefix(root,prefix);
     find_closest(one,three);
     update_graph(arr,one,three);
 
