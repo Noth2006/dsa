@@ -59,7 +59,7 @@ char (*parseJSON(const char* json))[100][256] {
                     printf("missing bracket\n");
                     return NULL;
                 }
-                printf("itemno: %d\n",itemno);
+                printf("\t");
                 strcpy((*arr)[itemno],"NULL");
                 eofFlag = 1;
                 break;

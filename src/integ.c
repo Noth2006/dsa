@@ -1,5 +1,4 @@
 #include<stdio.h>
-#include "autoc.h"
 #include<stdlib.h>
 #include<string.h>
 #include "parser.h"
@@ -37,30 +36,6 @@ void update(NODE* head, NODE* new) {
 }
 
 
-NODE* set_weight(char n[],NODE*root){
-    NODE*temp=root;
-    int cost=0;
-    //find interested cost
-    while(strcmp(n,temp->name)!=0){
-        temp=temp->next;
-    }
-    if(temp==NULL)
-    {
-        printf("The item doesn't exit");
-        return NULL;
-    }
-    cost=temp->cost;
-    NODE*curr=root;
-    while(curr!=NULL){
-        curr->weight=abs(curr->cost-cost);
-        curr=curr->next;
-    }
-    return temp;
-}
-
-
-
-
 void update_graph(NODE*arr[],NODE*head,NODE*interest){
     //find index of the interest node
     int count =0;
@@ -74,15 +49,45 @@ void update_graph(NODE*arr[],NODE*head,NODE*interest){
     }
     NODE*temp=head;
     while(temp!=NULL){
-        if(temp->weight<=500){
+        if(temp->weight<=4000){
             arr[count]=temp;
             printf("name:%s\n cost%d\n",temp->name,temp->cost);
+            
         } 
         temp=temp->next;
     }
-    if(arr[count]==NULL||arr[count]==interest){
+    if(arr[count]==NULL){
         printf("No related products\n");
     }
+}
+void display(NODE*root){
+  NODE*temp=root;
+  while(temp!=NULL){
+    printf("%s : %d\n",temp->name,temp->cost);
+    temp=temp->next;
+  }
+    printf("\n");
+}
+
+NODE* set_weight(char n[],NODE*root){
+  NODE*temp=root;
+  int cost=0;
+  //find interested cost
+  while(strcmp(n,temp->name)!=0){
+    temp=temp->next;
+  }
+    if(temp==NULL)
+    {
+        printf("The item doesn't exit");
+        return NULL;
+    }
+  cost=temp->cost;
+  NODE*curr=root;
+  while(curr!=NULL){
+    curr->weight=abs(curr->cost-cost);
+    curr=curr->next;
+  }
+  return temp;
 }
 
 
@@ -97,7 +102,7 @@ int main(){
     update(one,three);
     NODE*four=create("acer",76000);
     update(one,four);
-    FILE* file = fopen("../data.json", "r");
+    FILE* file = fopen("data.json", "r");
     if (file == NULL) {
         perror("Error opening file");
         return 1;
@@ -122,39 +127,20 @@ int main(){
     free(json);
     NODE* new;
     int i = 0;
-    //    printf("%d , %s\n",strcmp((*test)[12],"NULL"),(*test)[12]);
-    // for(int j = 9;j<17;j++)
-    // {
-    //     printf("%d : %s\n",j,(*test)[j]);
-    // }
-    NODEE *root=getnode();
-
-    char prefix[100];
-
+//    printf("%d , %s\n",strcmp((*test)[12],"NULL"),(*test)[12]);
+   // for(int j = 9;j<17;j++)
+   // {
+   //     printf("%d : %s\n",j,(*test)[j]);
+   // }
     while(strcmp((*test)[i], "NULL"))
     {
         new = create((*test)[i],atoi((*test)[i+1]));
         update(one,new);
-        insert((*test)[i],root);
         i+=2;
     }
-    int ch;
-    while(1){
-        printf("\nEnter 1 to search products \nEnter 2 to find closest match based on prices\n>");
-        scanf("%d",&ch);
-        switch(ch){
-            case 1:
-                printf("\nEnter the product name to search: \n");
-                scanf("%s",&prefix);
-                display_prefix(root,prefix);
-                break;
-
-            case 2:
-                printf("\nFind closest match based on price: \n");
-                scanf("%s",&prefix);
-                NODE* interest = set_weight(prefix,one);
-                update_graph(arr,one,interest);
-                break;
-        }
-    }
+  char n[MAX];
+  scanf("%s",n);
+  
+  NODE* interest=set_weight(n,one);
+  update_graph(arr,one,interest);
 }

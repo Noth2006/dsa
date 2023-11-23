@@ -8,27 +8,57 @@
     },
     {
       "brand": "Samsung",
-      "model": "Galaxy S21",
+      "model": "Galaxy_S21",
       "price": "799.99",
     },
     {
       "brand": "Dell",
-      "model": "XPS 13",
+      "model": "XPS_13",
       "price": "1299.99",
     },
     {
       "brand": "HP",
-      "model": "Envy x360",
+      "model": "Envy_x360",
       "price": "899.99",
     },
     {
       "brand": "Google",
-      "model": "Pixel 6",
+      "model": "Pixel_6",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_5",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_3",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_2",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_1",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_8",
+      "price": "699.99",
+    },
+    {
+      "brand": "Google",
+      "model": "Pixel_7",
       "price": "699.99",
     },
     {
       "brand": "Lenovo",
-      "model": "ThinkPad X1 Carbon",
+      "model": "ThinkPad_X1_Carbon",
       "price": "1499.99",
     }
   ]
